@@ -5,8 +5,9 @@ using namespace std;
 class Vector {
 
 private:
-    int* arr = nullptr;
-    int size;
+    int* arr {nullptr};
+    int size {0};
+    int capacity {};
 
 public:
     Vector(int size) :
@@ -14,8 +15,8 @@ public:
 
         if (size < 0)
             size = 1;
-
-        arr = new int[size] {};
+        capacity += 10;
+        arr = new int[capacity] {};
     }
 
     ~Vector() {
@@ -58,16 +59,42 @@ public:
     }
 
     // add a new item in the last of the array
+    //void push_back(int value) {
+    //    // create a new array with bigger size
+    //    int* arr2 = new int[size + 1];
+
+    //    // move the old data into the new bigger array
+    //    for (int i = 0; i < size; ++i)
+    //        arr2[i] = arr[i];
+
+    //    // add the new element and increase size 
+    //    arr2[size++] = value;
+
+    //    // change the pointers 
+    //    swap(arr, arr2);
+    //    
+    //    // remove the useless data
+    //    delete[] arr2;
+    //}
+
     void push_back(int value) {
-        // create a new array with bigger size
-        int* arr2 = new int[size + 1];
+        if (size == capacity)
+            expand_capacity();
+        arr[size++] = value;
+    }
+
+    void expand_capacity() {
+        // Double the actual array size 
+        capacity *= 2;
+
+        cout << "Expand capacity to: " << capacity << "\n";
+
+         //create a new array with bigger size, which is doubled size!
+        int* arr2 = new int[capacity];
 
         // move the old data into the new bigger array
         for (int i = 0; i < size; ++i)
             arr2[i] = arr[i];
-
-        // add the new element and increase size 
-        arr2[size++] = value;
 
         // change the pointers 
         swap(arr, arr2);
@@ -75,6 +102,7 @@ public:
         // remove the useless data
         delete[] arr2;
     }
+
 };
 
 
