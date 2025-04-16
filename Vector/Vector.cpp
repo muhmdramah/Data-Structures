@@ -48,6 +48,33 @@ public:
         }
         return -1;
     }
+
+    int get_front() {
+        return arr[0];
+    }
+
+    int get_back() {
+        return arr[size - 1];
+    }
+
+    // add a new item in the last of the array
+    void push_back(int value) {
+        // create a new array with bigger size
+        int* arr2 = new int[size + 1];
+
+        // move the old data into the new bigger array
+        for (int i = 0; i < size; ++i)
+            arr2[i] = arr[i];
+
+        // add the new element and increase size 
+        arr2[size++] = value;
+
+        // change the pointers 
+        swap(arr, arr2);
+        
+        // remove the useless data
+        delete[] arr2;
+    }
 };
 
 
@@ -65,4 +92,14 @@ int main()
     cout << v.get(3) << "\n";
     cout << v.find(55) << "\n";
     cout << v.find(5) << "\n";
+
+    int n = 5;
+    Vector newArr(n);
+
+    for (int i = 0; i < n; i++)
+        newArr.set(i, i);
+    newArr.print();
+
+    newArr.push_back(20);
+    newArr.print();
 }
