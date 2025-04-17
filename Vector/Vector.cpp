@@ -14,8 +14,7 @@ public:
         size(size) {
 
         if (size < 0)
-            size = 1;
-        capacity += 10;
+            size = 1;        capacity += 10;
         arr = new int[capacity] {};
     }
 
@@ -103,6 +102,25 @@ public:
         delete[] arr2;
     }
 
+    // Inserts a new element at the specified index by shifting elements to the right.
+    // Expands the array capacity if it's full before insertion.
+    void insert(int idx, int value) {
+
+		// Check if the index is valid
+        assert(0 <= idx && idx < size);
+
+		// Check if the array is full and expand capacity if needed
+		if (size == capacity)
+			expand_capacity();
+
+		// Shift elements to the right to make space for the new element
+        for (int i = size - 1; i >= idx; --i)
+			arr[i + 1] = arr[i];
+
+		// Insert the new element at the specified index
+		arr[idx] = value;
+		++size;
+    }
 };
 
 
@@ -129,5 +147,8 @@ int main()
     newArr.print();
 
     newArr.push_back(20);
+    newArr.print();
+
+	newArr.insert(3, 10000);
     newArr.print();
 }
